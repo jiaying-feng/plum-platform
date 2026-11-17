@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>青梅农旅 · PC 管理后台</title>
+<link rel="stylesheet" href="/web/common.css" />
+</head>
+<body>
+<div class="admin-shell">
+  <aside class="sidebar">
+    <div class="brand">青梅农旅后台</div>
+    <a href="#/dashboard" data-nav="dashboard">数据看板</a>
+    <a href="#/merchants" data-nav="merchants">商户审核</a>
+    <a href="#/sessions" data-nav="sessions">场次审核</a>
+    <a href="#/products" data-nav="products">商品审核</a>
+    <a href="#/festivals" data-nav="festivals">活动发布</a>
+    <a href="#/orders" data-nav="orders">订单管理</a>
+    <a href="#/reservations" data-nav="reservations">预约管理</a>
+    <a href="#/logs" data-nav="logs">操作记录</a>
+  </aside>
+  <div class="admin-main">
+    <div class="admin-head">
+      <div><b id="pageTitle">数据看板</b><span class="muted small" id="pageSub"></span></div>
+      <div><span class="small muted" id="whoami"></span>
+        <button class="btn btn-sm" id="logoutBtn" style="margin-left:10px">退出</button></div>
+    </div>
+    <div class="admin-body" id="app"><div class="loading">正在把账本翻出来…</div></div>
+  </div>
+</div>
+<script src="/web/common.js"></script>
+<script src="/web/admin.js"></script>
+</body>
+</html>

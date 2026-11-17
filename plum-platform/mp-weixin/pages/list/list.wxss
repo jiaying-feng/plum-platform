@@ -1,0 +1,3 @@
+/* 列表页补充样式，通用组件见 app.wxss */
+.list-item:active { border-color: var(--green); }
+.load-more .error-box { padding: 20rpx; }

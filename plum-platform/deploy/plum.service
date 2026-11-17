@@ -1,0 +1,18 @@
+[Unit]
+Description=Plum Platform (Flask + AI QA)
+After=network-online.target mysql.service mariadb.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/plum-platform
+Environment=PYTHONUNBUFFERED=1
+EnvironmentFile=/opt/plum-platform/ai.env
+ExecStart=/usr/bin/python3 start.py --no-browser
+Restart=always
+RestartSec=5
+StandardOutput=append:/var/log/plum-platform.log
+StandardError=append:/var/log/plum-platform.log
+
+[Install]
+WantedBy=multi-user.target

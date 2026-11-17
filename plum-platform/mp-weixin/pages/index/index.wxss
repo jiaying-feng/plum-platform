@@ -1,0 +1,6 @@
+/* 首页补充样式，通用组件见 app.wxss */
+.quick:active { background: var(--green-soft); }
+.badge:active { opacity: .7; }
+.pin:active .dot { background: var(--green-dark); box-shadow: 0 1rpx 5rpx rgba(0,0,0,.32); }
+.pin:active .halo { background: rgba(47,112,64,.30); }
+.card button { margin: 0; }

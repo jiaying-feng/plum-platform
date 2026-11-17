@@ -1,0 +1,164 @@
+<view class="page">
+
+  <view wx:if="{{!logged}}" class="card guest-card">
+    <view class="bold" style="font-size:32rpx">还没登录</view>
+    <button class="btn btn-primary btn-block" style="margin-top:22rpx" bindtap="gotoLogin">去登录</button>
+  </view>
+
+  <view wx:if="{{logged && user}}" class="user-card">
+    <view class="avatar">{{user.nickname}}</view>
+    <view class="user-body">
+      <view class="bold user-name">{{user.nickname}}</view>
+      <view class="small user-role">{{user.role}}</view>
+    </view>
+    <text class="badge user-badge">已登录</text>
+  </view>
+
+  <view wx:if="{{loading && !ready}}" class="state"><text class="spin"></text>正在把单据翻出来…</view>
+
+  <view wx:if="{{error}}" class="error-box">
+    <view class="msg">{{error}}</view>
+    <button class="btn btn-primary btn-sm" bindtap="retry">再试一次</button>
+  </view>
+
+  <view class="tabs mine-tabs">
+    <view wx:for="{{sections}}" wx:key="key" class="tab {{section == item.key ? 'on' : ''}}"
+      data-section="{{item.key}}" bindtap="switchSection">{{item.name}}</view>
+  </view>
+
+  <!-- 总览 -->
+  <block wx:if="{{section == 'overview'}}">
+    <block wx:if="{{logged}}">
+      <view wx:if="{{fromCache && !loading}}" class="small muted cache-note">当前为本地缓存内容，下拉可刷新</view>
+      <view class="stat-grid">
+        <view wx:for="{{stats}}" wx:key="label" class="stat">
+          <view class="value">{{item.value}}</view>
+          <view class="label">{{item.label}}</view>
+        </view>
+      </view>
+
+      <view class="section-head"><text class="title">手上的核销码</text><text class="more">到场给店家看</text></view>
+      <view wx:for="{{overview.bookings}}" wx:key="code" class="card">
+        <view class="row-between">
+          <text class="bold small">{{item.code}}</text>
+          <text class="badge badge-wait">{{item.status}}</text>
+        </view>
+        <view class="small muted">{{item.date}} · {{item.typeName}}</view>
+        <view class="code">{{item.checkin_code}}</view>
+      </view>
+      <view wx:if="{{!overview.bookings.length}}" class="state">还没有要核销的单子</view>
+
+      <view class="section-head"><text class="title">收着的</text><text class="more">{{favorites.length}} 条</text></view>
+      <view wx:for="{{favorites}}" wx:key="key" class="list-item" data-type="{{item.type}}"
+        data-id="{{item.id}}" bindtap="gotoDetail">
+        <view class="ph ph-1 thumb">{{item.typeName}}</view>
+        <view class="body">
+          <view class="bold ellipsis">{{item.title}}</view>
+          <view class="small muted">{{item.typeName}} · 点开看看</view>
+        </view>
+      </view>
+      <view wx:if="{{!favorites.length}}" class="state">在详情页点「收着」，就存到这儿了</view>
+    </block>
+    <view wx:else class="state">登录后就能看到自己的单据</view>
+  </block>
+
+  <!-- 单据 -->
+  <block wx:if="{{section == 'bills'}}">
+    <block wx:if="{{logged}}">
+      <view class="section-head"><text class="title">买过的东西</text><text class="more">{{orders.length}} 笔</text></view>
+      <view wx:for="{{orders}}" wx:key="id" class="card">
+        <view class="row-between">
+          <text class="bold small">{{item.order_no}}</text>
+          <text class="badge {{item.status == '待支付' ? 'badge-wait' : 'badge-ok'}}">{{item.status}}</text>
+        </view>
+        <view class="small muted">¥{{item.amount}} · {{item.created_at}} · 寄给 {{item.receiver}}</view>
+        <view wx:for="{{item.items}}" wx:for-item="sub" wx:key="name" class="small muted">
+          {{sub.name}} × {{sub.quantity}}（¥{{sub.price}}）</view>
+        <view wx:if="{{item.canEdit}}" class="bill-actions">
+          <button class="btn btn-sm" data-id="{{item.id}}" bindtap="cancelOrder" disabled="{{busy}}">取消</button>
+          <button class="btn btn-primary btn-sm" data-id="{{item.id}}" bindtap="payOrder" disabled="{{busy}}">去支付</button>
+        </view>
+      </view>
+      <view wx:if="{{!orders.length}}" class="state">还没下过单</view>
+
+      <view class="section-head"><text class="title">采摘预约</text><text class="more">{{reservations.length}} 条</text></view>
+      <view wx:for="{{reservations}}" wx:key="id" class="card">
+        <view class="row-between">
+          <text class="bold small">{{item.code}}</text>
+          <text class="badge {{item.status == '待核销' ? 'badge-wait' : 'badge-ok'}}">{{item.status}}</text>
+        </view>
+        <view class="small muted">{{item.orchard_name}} · {{item.visit_date}} {{item.slot}} · {{item.people}} 人</view>
+        <view class="small muted">¥{{item.amount}} · 核销码 {{item.checkin_code}}</view>
+      </view>
+      <view wx:if="{{!reservations.length}}" class="state">还没约过采摘</view>
+    </block>
+    <view wx:else class="state">登录后就能看到自己的单据</view>
+  </block>
+
+  <!-- 集章 -->
+  <block wx:if="{{section == 'stamps'}}">
+    <view class="card stamp-head">
+      <view class="bold">已经集了 {{spots.stamped}} / {{spots.total}} 枚</view>
+      <view class="small muted">一天同一个点只盖一次，六枚集齐到游客中心换一份伴手礼。</view>
+    </view>
+    <view wx:for="{{spots.spots}}" wx:key="id" class="list-item">
+      <image wx:if="{{item.image}}" class="thumb" src="{{item.image}}" mode="aspectFill"
+        binderror="onImgError" data-field="spots.spots" data-idx="{{index}}" data-item="{{item}}" />
+      <view wx:else class="ph thumb ph-{{item.tone}}">{{item.imageText}}</view>
+      <view class="body">
+        <view class="bold ellipsis">{{item.name}}</view>
+        <view class="small muted ellipsis">{{item.intro}}</view>
+        <view class="stamp-action">
+          <text wx:if="{{item.stamped}}" class="badge badge-ok">已盖章</text>
+          <button wx:else class="btn btn-primary btn-sm" data-id="{{item.id}}" bindtap="stamp"
+            disabled="{{busy}}">盖一枚</button>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{!spots.spots.length}}" class="state">点位还没加载出来，下拉刷新试试</view>
+  </block>
+
+  <!-- 设置：未登录也能切环境 -->
+  <block wx:if="{{section == 'settings'}}">
+    <view class="card">
+      <view class="bold">运行环境</view>
+      <picker range="{{envNames}}" value="{{envIndex}}" bindchange="onEnvChange">
+        <view class="setting-row">
+          <text class="small">数据源</text>
+          <text class="small setting-value">{{envName}} ›</text>
+        </view>
+      </picker>
+      <view class="setting-row">
+        <text class="small">接口地址</text>
+        <text class="small muted setting-value">{{baseUrl}}</text>
+      </view>
+      <button class="btn btn-block" style="margin-top:18rpx" bindtap="setLanBase">改局域网地址</button>
+    </view>
+
+    <view wx:if="{{useMock}}" class="card">
+      <view class="bold">故障注入（仅模拟数据生效）</view>
+      <picker range="{{faultNames}}" value="{{faultIndex}}" bindchange="onFaultChange">
+        <view class="setting-row">
+          <text class="small">注入类型</text>
+          <text class="small setting-value">{{faultName}} ›</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="card">
+      <view class="bold">本地缓存</view>
+      <view class="setting-row">
+        <text class="small">缓存条目</text>
+        <text class="small muted">{{cacheInfo.count}} 项 / {{cacheInfo.sizeKB}} KB</text>
+      </view>
+      <button class="btn btn-block" style="margin-top:18rpx" bindtap="clearCache">清空缓存</button>
+    </view>
+
+    <view class="card">
+      <view class="bold">登录态</view>
+      <button wx:if="{{logged}}" class="btn btn-block logout-btn" style="margin-top:20rpx" bindtap="logout">退出登录</button>
+    </view>
+  </block>
+
+  <view class="small muted foot-note">梅子熟的时候，等你。</view>
+</view>

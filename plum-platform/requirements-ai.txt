@@ -1,0 +1,4 @@
+# AI 扩展域可选依赖：仅在 ai.env 里把 MYSQL_ENABLED=1 时才需要安装。
+# 外部大模型调用只用 Python 标准库 urllib，不需要 openai / requests / langchain。
+-r requirements.txt
+PyMySQL==1.1.1

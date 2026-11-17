@@ -1,0 +1,234 @@
+==========================================================================
+ 大邑䢺江镇青梅产业农商文旅综合平台 · 交付包清单
+==========================================================================
+生成时间：2026-11-10 21:08:06
+压缩包名：plum-platform_full_20261110.zip
+压缩格式：ZIP / DEFLATE（compresslevel=9）/ 文件名 UTF-8 标志位
+源目录  ：plum_platform/plum_platform/plum-platform（主项目）
+           plum_platform/plum_platform/ui-showcase（界面总览，可选）
+
+一、包含范围（解压后的顶层结构）
+  plum-platform/              主项目：全部源码、配置、依赖清单、资源、文档、成品
+  ui-showcase/                界面总览展示页（16 张 PNG + index.html），非运行依赖
+  PACKING_MANIFEST.txt        本清单（打包时生成，不写回源目录）
+  requirements-optional.txt   可选依赖清单（打包时生成，不写回源目录）
+
+  plum-platform/ 明细：
+    start.py / start.bat       一键启动；start.py 支持 --reset/--port/--no-browser
+    requirements.txt           运行依赖，仅 Flask==3.0.3
+    README.md                  快速开始、目录结构、演示账号、常见问题
+    server/                    Flask 后端 9 个 .py：四组 Blueprint + 公共支撑 + 状态机 + 建库
+    web/                       6 个 HTML + assets/ 下 9 个 css/js，纯静态无构建
+    mp-weixin/                 原生小程序工程，含 config/、utils/、services/、mock/、pages/
+    assets/                    33 张统一规格图片（18 PNG + 15 WebP）
+    docs/                      开发任务书.md、目录与运行说明.md、screenshots/ 20 张界面截图
+    tests/                     4 个验收脚本（接口 45 项 / 小程序 23 项 / 界面巡检 2 组）
+    毕业设计答辩材料/          说明书 docx、答辩 PPT pptx、评语表 docx
+      _build/                  7 个生成与校验脚本 + figures/ 10 张插图源 + 2 份校验报告
+    data/                      空目录；server/db.py 的 init_db() 首次启动自动建库
+
+二、排除范围与理由
+  [构建/运行缓存] __pycache__/、*.pyc、*.pyo、*.swp
+  [本地运行数据] data/plum.db（含本机演示数据；首次启动自动重建，可用 --reset 回到基准态）
+  [构建中间产物] 毕业设计答辩材料/_build/_preview/（21 张 QA 预览图，由 qa_slides.py 重建）
+  [本地环境文件] *.log、*.pid、Thumbs.db、desktop.ini、.DS_Store、~$*、*.tmp、*.bak
+  [环境目录] .git/、.idea/、.vscode/、venv/、.venv/、node_modules/、dist/、build/、.pytest_cache/
+  [未纳入的同级目录] 顶层 _ui_http.*.log/.pid、admin-*.log、h5-*.log 等运行日志；
+                     plum-platform_source_snapshot_20261109_111943/ 与
+                     plum-platform_custom_custom-demo_20261109_112059/ 属于另一份旧版
+                     plum-platform-full-modified-20261026 的第三方打包快照（Java/Vue/外置 AI
+                     服务，含 3000+ node_modules 类文件），与当前 Python Flask 项目无关。
+
+  _build/figures/（10 张插图）与 final_report.txt、qa_report.txt 予以保留：它们是
+  build_report.py / build_slides.py 的输入素材与校验记录，保留后可直接重建文档。
+
+  统计：源文件 198 个 / 26509594 字节；纳入 159 个 / 22122885 字节；排除 39 个 / 4386709 字节。
+
+三、依赖清单
+  运行必需：见 plum-platform/requirements.txt —— Flask==3.0.3；Python 3.10+；SQLite 内置。
+  可选安装：见包内 requirements-optional.txt —— python-docx / python-pptx / Pillow /
+            lxml（重建答辩材料）、websocket-client（浏览器界面巡检）。
+  小程序  ：微信开发者工具即可；默认 mock 环境不依赖后端；离线验收脚本需 Node.js。
+  注意    ：_build/gen_figures.py 与 qa_slides.py 硬编码 Windows 字体
+            C:/Windows/Fonts/msyh.ttc，重新生成插图需在 Windows 上进行；
+            已生成的 docx / pptx 成品在任何平台均可直接打开，不受此限制。
+  零外部依赖：外部 AI 模型 0、云 API 0、在线 TTS 0、API 密钥 0，可断网单机运行。
+
+四、新电脑还原步骤（摘要，详见项目 README.md / docs/目录与运行说明.md）
+  1. 解压到不含空格与特殊字符的路径；用 7-Zip / WinRAR / Win10+ 自带解压，
+     若中文目录名乱码，请在解压工具中指定文件名编码为 UTF-8。
+  2. 核对本清单第五节的 SHA-256 或比对文件数。
+  3. python --version 确认 >= 3.10；python -m pip install -r plum-platform/requirements.txt
+  4. cd plum-platform 后执行 python start.py --reset（首次重建 data/plum.db 与基准数据）。
+     Windows 可直接双击 start.bat。服务默认 0.0.0.0:8080。
+  5. 浏览器打开 /health、/、/consumer、/biz、/admin、/visitor、/merchant 巡检。
+  6. python tests/smoke_test.py（45 项）、node tests/mp_weixin_smoke.js（23 项）。
+  7. 微信开发者工具「导入项目」选择 mp-weixin/；默认 mock 可独立跑通；
+     切 local 需先启动服务并在详情→本地设置勾选「不校验合法域名」。
+  8. 答辩材料直接打开 3 个 docx/pptx；如需重新生成，先装可选依赖，再依次执行
+     _build/gen_figures.py → build_report.py → build_evaluation.py → build_slides.py
+     → qa_slides.py → final_check.py。
+
+五、文件校验（SHA-256，共 159 项；清单自身与可选依赖清单为生成文件，不列入）
+--------------------------------------------------------------------------
+f1c91c0fc81fb7368985b9bf02f3add6191f60bf8c3c6068bd694dbba6ce6ccf  plum-platform/.tmp_screen.png
+5be2b0b00fac9a007f39f6649e619fe57f8ae56c551d46283e8440a3a77040cb  plum-platform/README.md
+73ead45bf0ee0ea17266543ba0637d4710263bb9d8e9dd311a186ea243806b4a  plum-platform/assets/banner_01.webp
+4e8591b9141c2e92c36516f8371321d3f19ae791a85f2fd5a7e34463b2b81ed4  plum-platform/assets/banner_02.webp
+17cd6c28539eb32eb2742fa96d68caf52b338545daeb05fd19f4a7cbea070b71  plum-platform/assets/banner_03.webp
+a31ac7750b198a4ae0558ecf89cf92fc5a742a2e836d5007e964cf9435cd1969  plum-platform/assets/banner_04.webp
+588f577bddb684761c1dd2f8b28d448070cb2945549cf47719401ee0525786ae  plum-platform/assets/homestay.webp
+76521bb6df2d8fe72e0c5de34dbb571981a090a5b6cd4a1f34ac2920396a9238  plum-platform/assets/orchard_01.webp
+3d65ff90216e2f934ed6e627908251506f40b3c73cf3d31f15ce61361e5d6fb5  plum-platform/assets/orchard_02.webp
+c88563233f7d71a024fa76a11109c5f20b55a5ed1a236350c7f6685097f4f34f  plum-platform/assets/orchard_03.webp
+bf8ae74a4ac1e047c0e725139e93e5d655ae086b7e4d0518ac39f7bc4e9b5e77  plum-platform/assets/orchard_04.webp
+8220f65d546350a102b52c51053f91f9ee7fa564f881d50bf0368ca244f7d025  plum-platform/assets/orchard_05.webp
+b8e066d2f21df30c03a44706f4c4633bde64569cd9ee28474c844b7805a2cd50  plum-platform/assets/orchard_picking.webp
+fac3755e3c5ebf416a6e20ebd5e4262ae2c97bb2291217842acfe1034240d741  plum-platform/assets/plum_wine.webp
+14b53b6e101406c8a9924d23d129e4215b54529c57b71c9f804770966f45483d  plum-platform/assets/product_01.png
+3a2264455d7a01775a2ca4e3e9324cf29c0666c7683e0b2a6d68ff9161333fe1  plum-platform/assets/product_02.png
+93a963c2d7b01e9457be606056e20246cb6c1bf5a88dd2ffb633cca32755b013  plum-platform/assets/product_03.png
+98825ccfd79e43fe72c900652db2769142cc3d65e46ad8b99622f294402e022b  plum-platform/assets/product_04.png
+66089d603247bfa74cb0e2ca4285fb282855985367f89c8bc0b47221a7ff1a2e  plum-platform/assets/product_05.png
+0e714d1a9233c5a4db857de2e8971a0cff8bc955bfb250ec43571f15f5a08e6b  plum-platform/assets/product_06.png
+7ebf1533e5751f6eaa822e143342d2d12997baf461ef02ca19bcafe6c1805072  plum-platform/assets/product_07.png
+fac362124667369edbf37ea3199506dcbe60e24e827b51efb3126f4d983398ce  plum-platform/assets/product_08.png
+8ff06eaadd4c719d02354b43d1dc3134ecc6a0f886529b90e9d2f0e552130aa5  plum-platform/assets/product_09.png
+28ab1074dd3cbca00f3341deaf35960fb4285dcf7a4f5148d6beafad04a61da8  plum-platform/assets/product_10.png
+cffd1b4fdb48e00bc3d8ed6bfc04efbe262b2db9eeab919180dc359dec0e06df  plum-platform/assets/product_11.png
+64c143cbbd2c8291f4a631aa18da792387c0c8a81ccffd9d9ebd700b21651b76  plum-platform/assets/product_12.png
+7fb2695a72fcc3893076c2e549ca108a1c664c30de63ec3004ac976a441e2d53  plum-platform/assets/product_13.png
+af366cc1a42c5618df4b13755fcf1ec65f1f4d13a32bc7cbac6d62078db76b19  plum-platform/assets/product_14.png
+b0664ab4203aa21f983640a57f1c57bce49d23fd245357140a171989a45691a1  plum-platform/assets/product_15.png
+c434a3d5ed80a76a2d067c7e03c239cddb0a5590c6814df06838dd9ccc8b5dc5  plum-platform/assets/product_16.png
+70f2bad63d27df5b56e6b0abbbfbea914c636f0a33695f25e51928f8a4c1756d  plum-platform/assets/product_17.png
+2ac76edde18fd714f145ea2da0d9a6f6afdce367fa569cbb9875ab838d2d2970  plum-platform/assets/product_18.png
+21f7cc53708a661b4dc9a25359fc9f9943033a26095a419136a0cb03e1e68916  plum-platform/assets/research_01.webp
+5dc121163fb4edc50ed6744029c70a5fd70eb92b4343ff2ec79d26333c3f8cef  plum-platform/assets/research_02.webp
+4ba3dcf2911ef8171b1ab77125d88d33b83a05b1a45c66e9d88aade474e2d051  plum-platform/assets/research_03.webp
+a3858bfd263edfe857b7a1049501b45cae39d44ac66cc6ce87686e1d5951ca14  plum-platform/docs/screenshots/admin_dashboard.png
+1a1c99c92286ee7e390ec807c1ed898caaa31d218e6b112a9d29728d859a5886  plum-platform/docs/screenshots/admin_festivals.png
+9b88372e3b30560a4f31a0634b31c87ddf111df254c85b9a9b981fb755f94cd3  plum-platform/docs/screenshots/admin_merchants.png
+599f1d2599595eaf4edcd71622fc69cce1425fd7b63cf14104397650f037d348  plum-platform/docs/screenshots/merchant_checkin.png
+36a21ba52308ce7da6d0aa2463085448eab1ccb45689e6289ea9a256a9a79988  plum-platform/docs/screenshots/merchant_home.png
+ad337d8b328345daa1c6171c4f90c30be30a4c6154005b4f8e2973e92ade7680  plum-platform/docs/screenshots/pc_admin_dashboard.png
+4f3db7f6e900d7adf64e15c511b095098ea0932e2ff3152795b0f51c2dd69a19  plum-platform/docs/screenshots/pc_biz_900.png
+e52f0c18d4ba6af0b3e2725d42ef5c51bd333f69303e1acb69a88fad99334e93  plum-platform/docs/screenshots/pc_biz_checkin.png
+5b1b0d12cd5c9faf08f38cc3346428284f8e51f344c8c8f072ac07454f986df3  plum-platform/docs/screenshots/pc_biz_home.png
+e1a8b0fd0c11877d8abcf4c18761cb23a5f6fffcf31e42d6dd3016bae0470ff8  plum-platform/docs/screenshots/pc_biz_products.png
+c591f26c496d2ee405081db244287ad01b556a2623a4a4e1cb5dc4c210750527  plum-platform/docs/screenshots/pc_consumer_900.png
+f886d9d841ee3896e134d3f27b902779511a708c00185947d4fc8431b28bd1ca  plum-platform/docs/screenshots/pc_consumer_cart.png
+2d189d4d7922715d5d56d72ebb460dbab85b888d36454ea999d5f2067e643363  plum-platform/docs/screenshots/pc_consumer_detail.png
+a4c83537879fe27b7cfdbf93030bcc9df7bd9dad7819a47367f43eeec8450a58  plum-platform/docs/screenshots/pc_consumer_home.png
+0e0a6535fb2b26f1d072b639213db846cdd69d8b9b21cc415ad838e90182e75a  plum-platform/docs/screenshots/pc_consumer_mine.png
+5c3f8efe4e69132646fc621a1eea848e6224358825a6ed9ec0bffec6aa65c8c9  plum-platform/docs/screenshots/pc_consumer_shop.png
+5527047c9d7291f0d807b74c9f7289b190470cd0d2a0be53eddcfc56d83ba46d  plum-platform/docs/screenshots/pc_portal.png
+3c495e771421df84ea46b7f8c5c5f9fb749593d75bb95a0f727698171bef8d15  plum-platform/docs/screenshots/portal.png
+abc996c74738483c746288aaed34c10c070e6b512a85a480dfb9685a4b5b6c35  plum-platform/docs/screenshots/visitor_ai.png
+dc89fc7d740dc57c81c19ca26d854eacff0a331d5c3e04b4881941041f8589b4  plum-platform/docs/screenshots/visitor_home.png
+724305785f01fdbd3cdeba156d951c3311300ab965253299521a3e70769ec397  plum-platform/docs/开发任务书.md
+d1c5aa4d8789ba210ee036cc12ef51665438f6d4bed3a731d5abbc5b48b6edd1  plum-platform/docs/目录与运行说明.md
+235973217665b422ecdf55be3d9a8ee1bb1e421ec8b1cbb527fd59df524b967e  plum-platform/mp-weixin/app.js
+324e914e7c6209beaf573e387dc08e0fbedc210090da0fbd2568fd8174a908ae  plum-platform/mp-weixin/app.json
+9dc955c2ede2c8c98121773cfa73311b5e5a2711f7fe4a428ab41f3d36d8f4f0  plum-platform/mp-weixin/app.wxss
+28126c6006e65bbcd88d301b6589c7199d513c9d882b0a4d62e8fd6e3ed6465d  plum-platform/mp-weixin/config/index.js
+5ff74a0283b7c3f80c0e96fb4561e35b21378eb75c3d640efbd24152c9e45968  plum-platform/mp-weixin/mock/data.js
+332f9ecdf591c84d818f053514c43f9f4294049b5180fa144b8b5d8be32d0ed6  plum-platform/mp-weixin/mock/server.js
+c2539f99e11bfff716a6836d2409d6d309b9b363fa547ea33228f2b7dc5e3651  plum-platform/mp-weixin/pages/detail/detail.js
+5eb9ec82584f3d24c93593ca615c66b0f6a79991631eceb946c00839f04ae833  plum-platform/mp-weixin/pages/detail/detail.json
+3d7e821236094e34539bf80998b4be1414085409a713841c061faea6fd09f39c  plum-platform/mp-weixin/pages/detail/detail.wxml
+253936eecd0632c1c3ced95b95f2d66d22d2e2789f8ee317fad72561eae9c382  plum-platform/mp-weixin/pages/detail/detail.wxss
+ce77411a7d47f3d9711355985ef7c8454343fd3df4ffc1966d0c86a5e1c230c1  plum-platform/mp-weixin/pages/index/index.js
+7b2753d43d57fa98773f7c9406fcc672948cfe0a57a13411bf97976abb14dd49  plum-platform/mp-weixin/pages/index/index.json
+9a22818481a4dc588deecd4694bdeee60ddec34ce333c9a426ceea59d254d8cf  plum-platform/mp-weixin/pages/index/index.wxml
+26b02b6f4a35adb4da4f49522c0f91f0ceb5ca709a945d1a220f586da89b48fc  plum-platform/mp-weixin/pages/index/index.wxss
+ff8dcac08ba4e34230482cd50c9a2b7a252cd691327d50f2274ccbf047216dc5  plum-platform/mp-weixin/pages/list/list.js
+7bbd7be15486e9fb85f60c64404bf82fd83a4e5517db90fdea4f62094cd3a723  plum-platform/mp-weixin/pages/list/list.json
+c0bd39d74ee2006583366ced6b9c6129cce88c90fcb3518bcbe1975a15bc2603  plum-platform/mp-weixin/pages/list/list.wxml
+56e9c4adef2e009e897990046730dca3de64a0225d64dd72a41513a4075a251f  plum-platform/mp-weixin/pages/list/list.wxss
+d6e302e32ac8e26f2362bb107edb93ffb2a612908089ce1d2ea6eaf7a95b86aa  plum-platform/mp-weixin/pages/login/login.js
+52ea4ef00e26c9cd468da000d6af7be1d24fdda993037b014e76239080258665  plum-platform/mp-weixin/pages/login/login.json
+b7f9a93c2e3c97f6ca4e4236f6517c5a59cc9cd1c93ab583b9b5c2a84384adde  plum-platform/mp-weixin/pages/login/login.wxml
+581a02da0f47a4d32ccd2555bca43f9adbc1b956242e9157b3f8ee7d91562138  plum-platform/mp-weixin/pages/login/login.wxss
+e07b722359875fd309e0d357e3c181d7a44412be87fe01d0549efd11fdbf88e3  plum-platform/mp-weixin/pages/mine/mine.js
+06710622939224776567f7894a619d8979bbdb1d94e43fb70fd803519347eba2  plum-platform/mp-weixin/pages/mine/mine.json
+1491c90cd7c51dabb93a1f3f9f3f2fbd9dbbfa7ebeb808ad27ed4f435c0cebdc  plum-platform/mp-weixin/pages/mine/mine.wxml
+8e8e41253c00a5de762e4ba3b3a3316c59ffd0c692877d238a59ece21829280f  plum-platform/mp-weixin/pages/mine/mine.wxss
+12aaf5f7902b095f237f86dd415bc5acca4fe44e12a2e21261bcda3e4315275f  plum-platform/mp-weixin/project.config.json
+6194dd9dec66f4a887242051317bff14977509ce4cee771d56cdbf34360e5127  plum-platform/mp-weixin/services/api.js
+ace4047b84d44d3af88519227d459878e695496e00e69fccd09278ee0c9c8f77  plum-platform/mp-weixin/sitemap.json
+b7bd1cb23a25780ba9eb9bf9f8ed68dd2011f41c656b44db1b85e676b871d00b  plum-platform/mp-weixin/utils/auth.js
+e18b8e18baa102daf109bfe0abc76df3c63f580611c7fc90645c395442b44ef0  plum-platform/mp-weixin/utils/cache.js
+33fc68634a8d5324d1a5135e012e7c77984060ed55f82c6954ea4f5af20e9334  plum-platform/mp-weixin/utils/request.js
+2db112d7e812383c95f1270ddeaf25c884ac0beb7ba6e29745b72751c685fc35  plum-platform/requirements.txt
+1d5a36f5d455e80ddde879cc09f3a444226017eeb434d4cd4cc3dbd70789edd2  plum-platform/server/__init__.py
+9a9c7fa9c47def4fe0eb40002d9a040eaab28be265141cfaf336af73c6fcde28  plum-platform/server/api_admin.py
+6599e4b28b6f0dc7551dca8d35ebd936cf940fa230bdd8328e211897a0e56977  plum-platform/server/api_ai.py
+eb8247acfb9aa79fea735376dc8a1518b204a282aaa0b2cfee94b0136b8a2f3f  plum-platform/server/api_business.py
+227f168d0ecdeb9d431ba619d828a7d4fe1e6bcab6341036052af123df2e0f12  plum-platform/server/api_common.py
+b5a636befa7f18c3bca31718977991562d07d5e63dc74b99b6aa699118ff5cec  plum-platform/server/api_merchant.py
+de8a3c0857d5ebeee6173e4164ea721931cb6ba93f69d27bb8713b8dbde7d5a8  plum-platform/server/app.py
+25cd08931016cfd18aa7ce912996819d05b65d8a61909140213a7412ab3b033c  plum-platform/server/db.py
+f4fd99f1b1ac22c44f598231e594bca7ae49fca398dd062454b4a459d9109d48  plum-platform/server/state_machine.py
+2018c4e53c2e178517e1cac10c6a2e39734013189866018953481d75db02cccc  plum-platform/start.bat
+b4583d6f31f9e157ec483aac42f4662780ec9e1ca28129e2013328d1c8a7fbdb  plum-platform/start.py
+d1ec0fd5f5a558c6004d7775b68c21d29b2acbbf507912bb6732db51774653c7  plum-platform/tests/mp_weixin_smoke.js
+9ba5964edf6b9d85719bb65fe620b43ecbe61ee56bc67edc62c767fd5c47ce82  plum-platform/tests/pc_audit.py
+d026398167089e3ab56458d6d495fdccf95496a170162ba442959121e746570d  plum-platform/tests/smoke_test.py
+374dd4672b631b22af28552131305239661390b4daa50e1c3793ccb33883b3a2  plum-platform/tests/ui_audit.py
+bc1c0a7845652cdeb11f0eeb3d31c9f003f33800fcbd9a7a2f21740ddf5fc163  plum-platform/web/admin.html
+d6111e75cd321b691023a822c3142840f7cd3d672b30f548bf762108a8014df5  plum-platform/web/assets/admin.js
+44f0a58fc7e3ca1d5640e32ec27fe01e31a7b915d06d9b732c815ef94f79e7ac  plum-platform/web/assets/biz.js
+10cbf50779ad0718a172308d9241ee11d8956cb702bc03534cf3fb2fd92d52e4  plum-platform/web/assets/common.css
+0b2a572eae74337598ebbb73a330f76eba2158f1861f3557866a28cc83f5cf28  plum-platform/web/assets/common.js
+ad1ba48069cd33babac1ad1289130284e49407b4ed2d0e151f77764dc9177d91  plum-platform/web/assets/consumer.js
+d0c660923f8deedfd158c9ba4ce8e3ef1d37d496acc19effd268a8e278e54f36  plum-platform/web/assets/merchant.js
+8e60938cb339d50dceb5d797aec1dfd6e0c0ecfd016a8dc64b2d302722d4b012  plum-platform/web/assets/pc.css
+4815a1e8b00db4981ed6ada522b7cb9a569ca35669dff3cf18cf6aa3f8af5683  plum-platform/web/assets/pc.js
+da3f492be995fdfc1da207949eb919254fc0f2f9c6e3d64eca7727b2a4198c6a  plum-platform/web/assets/visitor.js
+ab31f1ae3b9a2370239c830548853613b2f8b4845ed111c4be5b2ca4fa54933c  plum-platform/web/biz.html
+a0ece31e1e67a7d1400afed75cfb5fc61fbca29958c07fcef36ea07105ef3360  plum-platform/web/consumer.html
+b28429f2643bc38e723406f5ddb7029db711a5437b2714fc2e949cd7189571fd  plum-platform/web/index.html
+2f5dd022fbcebc79089f34122a3f2f011ec252a285b90b15accec7e86372863a  plum-platform/web/merchant.html
+416e0783766b590ef2750c1ff1fc64cb02655f32852bd438a3490e69133c11ed  plum-platform/web/visitor.html
+12b7bf020bcb9d18dfac95bfbd97fe54c3c5ce08a5839251b2d184d1f0fa125f  plum-platform/毕业设计答辩材料/_build/build_evaluation.py
+3c0a913de5546f1dce6fd3d1a51df8b75b3c6661afeca50b699fa1eda38f637d  plum-platform/毕业设计答辩材料/_build/build_report.py
+d896339b8a6f9448658e0135cb2d033d8357a813f30f4fd82f0c929b79ab3061  plum-platform/毕业设计答辩材料/_build/build_slides.py
+fce41e1bce93c68a372c630fc7338e5a7e05e647f2a102d44e4421bfa17f4ffe  plum-platform/毕业设计答辩材料/_build/figures/fig_ai_deps.png
+ddb192d5eccae727997fa96fcaa463d33e8bb8368e36d0637287da972d3a0754  plum-platform/毕业设计答辩材料/_build/figures/fig_architecture.png
+7e74c5d7d33618676bd46d759787299346d449f727a09f38d87b5e0d1ab28a74  plum-platform/毕业设计答辩材料/_build/figures/fig_auth.png
+6102a1346d426da1a886bc164b44d09bbf00484d560aab545856f8123c2a727b  plum-platform/毕业设计答辩材料/_build/figures/fig_booking.png
+77d3fef74e95e9c19dc720c4db96ec7cdac3110f82c12d51ed046f6215200dbf  plum-platform/毕业设计答辩材料/_build/figures/fig_er.png
+1d12d1542b02f680d32b29fb813ce6ab4b546deb1b03bdb6abcc5441171f431a  plum-platform/毕业设计答辩材料/_build/figures/fig_functions.png
+510abcd6e65f9edcea19a0dd648e7e25ca3cb873388e052aa152dcb17816462e  plum-platform/毕业设计答辩材料/_build/figures/fig_multiend.png
+e980d1b1342286ff0a560c962486e74ef97c0faef7f1bf4cdbb7fa9c125e2f13  plum-platform/毕业设计答辩材料/_build/figures/fig_order.png
+ba3d49693dc837ba01d7883f72496fb29884a94395547fa605215125f010b5ae  plum-platform/毕业设计答辩材料/_build/figures/fig_test.png
+4f0aaec1498377a50af0d1926633e010cc7eca7a03ff3af6b7aa644e676d655e  plum-platform/毕业设计答辩材料/_build/figures/school_logo.png
+022ec9b3d9d5ff40f76e451716e91b18cc416b56aed33856902b4e12e1cb1d28  plum-platform/毕业设计答辩材料/_build/final_check.py
+a517d6f7f511b4623f06dc6b5e1043036253a318dc14e8f8583bba69171cd8ca  plum-platform/毕业设计答辩材料/_build/final_report.txt
+77e7f6daf7a5d579d2e7b2b980bef4066d3df523ee1cf114ce36d7233334a2a3  plum-platform/毕业设计答辩材料/_build/gen_figures.py
+2df07de0fdf058cd12b2fa2f50c214a60c22caef82066fbf3ce24e5086848222  plum-platform/毕业设计答辩材料/_build/qa_report.txt
+819fa204fca8bb857c2f3f58a197eccafa44508be00255c52a62b9a8570e5b8b  plum-platform/毕业设计答辩材料/_build/qa_slides.py
+9f26e379be4bfd46419d7780d3837ff719fffff2dc8366fe59460fa164294812  plum-platform/毕业设计答辩材料/_build/report_content.py
+51fffc984e6cb2b50801ed32f0a69fad40688b26c4dccd2c5b9c31e1f82c122f  plum-platform/毕业设计答辩材料/毕业设计评语表.docx
+8e8ed07dd147d85ff1f78aff00b4d6bdb39626e1f06a4a6aad741adb56d6cd23  plum-platform/毕业设计答辩材料/毕业设计说明书_大邑䢺江镇青梅产业农商文旅综合平台.docx
+861560e79b6604c3922b862fc73b983ad79256388915776accc78ba4a37b82da  plum-platform/毕业设计答辩材料/答辩PPT_大邑䢺江镇青梅产业农商文旅综合平台.pptx
+1c57ade96cad70f9eb324707e913db682dbf25075111fd29019ee061b42eab9e  ui-showcase/admin_categories.png
+f04ff4152004cc86e0c73677572b2a25b606ec19d0d8b119e3212cd9344e8bcc  ui-showcase/admin_dashboard.png
+d811b47de8e5b6b5a5ccd2b2e2e343ccea65493f1d56bf157aee4450835c2536  ui-showcase/admin_login.png
+9bc761377b2ceadf71ced7bd5dffd868fd0537ade47eabe9d20877d39375eac1  ui-showcase/admin_merchants.png
+9f4275e1abe9600d2ed4287c7884690bd7acfe5db393a3b7a8257108fcd0516c  ui-showcase/admin_orders.png
+633ce99932266f1139e4afd0efd7cfac8edf4c6c07bdc8eac6d39b8401ffdd98  ui-showcase/admin_products.png
+a6fca8fca3c08ea6d01b8592decb809ce9c0a5f54a63550a99e3f0a4ed3a5b25  ui-showcase/admin_reservations.png
+b6fcd03bb6d518b74665e844f4d5c203180f049c3b8878823bd5429264e7b3f3  ui-showcase/admin_users.png
+17825a52bd9f80defa94fc3b5ab84a2edc1d35b87fad1d729d3618272619601a  ui-showcase/audit_desktop_h5_index.png
+2768c6422b33962f556eab91ee78f9370959f1e8859fd942bf835c1de1268157  ui-showcase/audit_mobile_homestay.png
+13865c7d24f8fd34d9581208ebe7e9f1f06679db96b8fd064e3d0934399d9e6d  ui-showcase/audit_mobile_index.png
+db0a6714fe99243ac5d699aa6924ad0b9d18dd251c334084af5f96343f18e0d6  ui-showcase/audit_mobile_orchard_detail.png
+638c40abcf0ffe26fdad85413c3a11bfd28c9a9aeabca393cfe46d7e9c92aa31  ui-showcase/audit_mobile_product_detail.png
+b44bdbeb60986cdc6ea7e534ec69bccf94d9b6cbb6973687d0f13fef88ae8d63  ui-showcase/audit_mobile_product_list.png
+b799d2da5d3e4d2f6aeb53e52c0e8c73c1a6bdd38a74e41ee8d1fb9f671e3f13  ui-showcase/audit_mobile_research.png
+cf24293398f2e32695455090b2254c25be2341c7ce879df1d102e3a4902d11e1  ui-showcase/h5_home.png
+32b01a91492c29393516f8cc9066147e8958c283b0aa00026a1b357aaefeda8e  ui-showcase/index.html
+--------------------------------------------------------------------------
+清单结束

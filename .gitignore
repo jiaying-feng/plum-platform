@@ -1,0 +1,46 @@
+# 真实密钥与本地配置（模板 ai.env.example 可提交）
+plum-platform/ai.env
+
+# 本地运行数据库（首次启动自动生成）
+plum-platform/data/*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# 毕业设计答辩材料（含个人信息，按要求不上传）
+plum-platform/毕业设计答辩材料/
+plum-platform/答辩提交说明.md
+
+# Python 缓存与依赖环境
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
+.venv/
+venv/
+env/
+
+# 运行产物与临时文件
+*.log
+*.pid
+*.tmp
+*.bak
+*.swp
+*.swo
+.tmp_screen.png
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# 编辑器 / IDE
+.idea/
+.vscode/
+*.code-workspace
+
+# 打包产物
+*.zip
+*.tar.gz
+dist/
+build/

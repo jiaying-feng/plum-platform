@@ -1,0 +1,32 @@
+<view class="login-page">
+  <view class="brand">
+    <view class="brand-title">䢺江青梅</view>
+    <view class="brand-line">摘梅子 · 酿一坛酒 · 住一晚</view>
+  </view>
+
+  <view class="card form-card">
+    <view class="form-title">登录游客账号</view>
+
+    <view class="field">
+      <view class="label">账号</view>
+      <input class="input" value="{{username}}" placeholder="请输入账号" placeholder-class="ph-input"
+        confirm-type="next" bindinput="onUser" />
+    </view>
+    <view class="field">
+      <view class="label">口令</view>
+      <view class="pwd-row">
+        <input class="input" value="{{password}}" password="{{!showPwd}}" placeholder="请输入口令"
+          placeholder-class="ph-input" confirm-type="done" bindinput="onPwd" bindconfirm="submit" />
+        <view class="pwd-toggle" bindtap="togglePwd">{{showPwd ? '收起' : '看看'}}</view>
+      </view>
+    </view>
+
+    <view wx:if="{{error}}" class="error-inline">{{error}}</view>
+
+    <button class="btn btn-primary btn-block submit" bindtap="submit" disabled="{{busy}}">
+      {{busy ? '正在登录…' : '登 录'}}
+    </button>
+    <button class="btn btn-block skip" bindtap="skip">先逛逛，不登录</button>
+  </view>
+
+</view>

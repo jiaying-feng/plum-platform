@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>青梅农旅 · 商户 PC 工作台</title>
+<link rel="stylesheet" href="/web/common.css" />
+<link rel="stylesheet" href="/web/pc.css" />
+<style>
+  .checkin-input { font-size: 30px; letter-spacing: 3px; text-align: center; padding: 16px; }
+  .checkin-result { border-radius: var(--r); padding: 20px; margin-top: 16px; }
+  .checkin-result.ok { background: #eaf4ea; border: 1px solid #cfe5cf; }
+  .checkin-result.bad { background: var(--danger-soft); border: 1px solid #f0d3d0; }
+  .batch-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+<div class="pc-shell theme-biz" id="shell">
+  <aside class="pc-sidebar">
+    <div class="pc-brand">商户工作台<small>青梅农旅 · 经营端</small></div>
+    <div class="pc-nav-group">经营概览</div>
+    <nav class="pc-nav">
+      <a href="#/home" data-nav="home"><i class="dot"></i><span class="txt">工作台</span></a>
+    </nav>
+    <div class="pc-nav-group">供给管理</div>
+    <nav class="pc-nav">
+      <a href="#/sessions" data-nav="sessions"><i class="dot"></i><span class="txt">采摘场次</span></a>
+      <a href="#/rooms" data-nav="rooms"><i class="dot"></i><span class="txt">房态与房价</span></a>
+      <a href="#/products" data-nav="products"><i class="dot"></i><span class="txt">商品管理</span></a>
+    </nav>
+    <div class="pc-nav-group">履约</div>
+    <nav class="pc-nav">
+      <a href="#/orders" data-nav="orders"><i class="dot"></i><span class="txt">订单与发货</span></a>
+      <a href="#/checkin" data-nav="checkin"><i class="dot"></i><span class="txt">统一核销</span></a>
+    </nav>
+    <div class="pc-nav-group">其它</div>
+    <nav class="pc-nav">
+      <a href="/consumer" target="_blank"><i class="dot"></i><span class="txt">看消费者站</span></a>
+      <a href="/" ><i class="dot"></i><span class="txt">返回门户</span></a>
+    </nav>
+  </aside>
+
+  <div class="pc-main">
+    <header class="pc-head">
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="pc-hamburger" id="hamburger" aria-label="展开导航">☰</button>
+        <div class="pc-title" id="pageTitle">工作台</div>
+      </div>
+      <div class="pc-head-right">
+        <span class="muted" id="merchantTag">经营主体：—</span>
+        <span id="whoami">还没登录</span>
+        <button class="btn btn-sm" id="logoutBtn" style="display:none">退出</button>
+      </div>
+    </header>
+    <main class="pc-body">
+      <div class="mobile-tip">当前是桌面版工作台。手机上用会更顺手：<a href="/merchant">打开商户 H5</a>。</div>
+      <div id="app"><div class="loading">正在把摊子摆好…</div></div>
+    </main>
+  </div>
+</div>
+
+<script src="/web/common.js"></script>
+<script src="/web/pc.js"></script>
+<script src="/web/biz.js"></script>
+</body>
+</html>

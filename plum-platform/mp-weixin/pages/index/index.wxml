@@ -1,0 +1,135 @@
+<view class="page">
+
+  <view wx:if="{{!ready && loading}}" class="state"><text class="spin"></text>正在把镇上的东西端上来…</view>
+
+  <view wx:if="{{ready && error && !banners.length}}" class="error-box">
+    <view class="msg">{{error}}</view>
+    <button class="btn btn-primary btn-sm" bindtap="retry">再试一次</button>
+  </view>
+
+  <block wx:if="{{ready}}">
+    <swiper indicator-dots autoplay circular interval="4500" duration="400"
+      style="height:300rpx;border-radius:24rpx;overflow:hidden">
+      <swiper-item wx:for="{{banners}}" wx:key="title">
+        <view class="hero">
+          <image wx:if="{{item.image}}" class="img img-16-9" src="{{item.image}}" mode="aspectFill"
+            binderror="onImgError" data-field="banners" data-idx="{{index}}" data-item="{{item}}" />
+          <view wx:else class="ph ph-{{item.tone}} img-16-9">青梅 · 䢺江</view>
+          <view class="hero-text">{{item.title}}</view>
+        </view>
+      </swiper-item>
+    </swiper>
+
+    <view class="card" style="margin-top:20rpx;background:#fbf3df;border-color:#f0e2bd">
+      <view style="display:flex;justify-content:space-between;align-items:center">
+        <text class="bold">{{tip.title || '这个时节'}}</text>
+        <text class="badge badge-wait">{{tip.tag || '当季'}}</text>
+      </view>
+      <view class="small muted" style="margin-top:8rpx">{{tip.content || '山里凉，带件外套，梅子正当时。'}}</view>
+      <view wx:if="{{fromCache && !loading}}" class="small muted" style="margin-top:6rpx">当前为本地缓存内容，下拉可刷新</view>
+    </view>
+
+    <view class="grid-4" style="margin-top:20rpx">
+      <view wx:for="{{quick}}" wx:key="type" class="quick" data-type="{{item.type}}" bindtap="gotoList">{{item.label}}</view>
+    </view>
+
+    <view class="section-head"><text class="title">问小梅</text></view>
+    <view class="card ai-card">
+      <view class="ai-head">
+        <view class="ai-avatar">梅</view>
+        <view class="ai-head-text">
+          <view class="bold">小梅</view>
+        </view>
+      </view>
+      <view class="ai-search">
+        <view class="ai-search-field">
+          <text class="ai-search-icon">⌕</text>
+          <input class="input ai-input" placeholder="比如：周末还有位置吗？"
+            value="{{question}}" bindinput="onQuestion" confirm-type="send" bindconfirm="ask" />
+        </view>
+        <button class="btn btn-primary ai-send" bindtap="ask" disabled="{{asking}}">{{asking ? '稍等' : '问一句'}}</button>
+      </view>
+      <view class="ai-asks">
+        <view class="ai-ask" data-q="青梅酒多少钱？" bindtap="quickAsk">青梅酒多少钱</view>
+        <view class="ai-ask" data-q="周末还有位置吗？" bindtap="quickAsk">还有位置吗</view>
+        <view class="ai-ask" data-q="住一晚多少钱？" bindtap="quickAsk">住一晚多少钱</view>
+      </view>
+      <view wx:if="{{answer}}" class="ai-answer">
+        <view class="ai-answer-label small muted">小梅答</view>
+        <view class="ai-answer-text">{{answer}}</view>
+        <view wx:if="{{source}}" class="small muted ai-answer-source">依据：{{source}}</view>
+      </view>
+    </view>
+
+    <view class="section-head"><text class="title">青梅园点位</text></view>
+    <view class="map">
+      <image class="map-bg" src="/images/map_base.jpg" mode="scaleToFill" />
+      <view class="map-label label-river">䢺江</view>
+      <view class="map-label label-road">大双路</view>
+      <view class="map-label label-town">老街</view>
+      <view class="map-label label-valley">青梅谷</view>
+      <view class="map-north"><text class="north-n">N</text><view class="north-arrow"></view></view>
+      <view wx:for="{{pins}}" wx:key="id" class="pin" style="left:{{item.left}}%;top:{{item.top}}%"
+        data-id="{{item.id}}" bindtap="onPin" aria-label="{{item.name}}">
+        <view class="halo"></view>
+        <view class="dot">{{item.index}}</view>
+      </view>
+      <view class="legend">
+        <view class="legend-row">
+          <view class="key-dot"></view><text>采摘园</text>
+          <view class="key-road"></view><text>道路</text>
+          <view class="key-water"></view><text>水系</text>
+        </view>
+        <view class="legend-note">䢺江镇地形示意 · {{pins.length}} 个采摘点</view>
+      </view>
+      <view class="map-scale">
+        <view class="scale-bar"><view class="scale-fill"></view></view>
+        <view class="scale-text"><text>0</text><text>500 m</text></view>
+      </view>
+    </view>
+
+    <view class="section-head"><text class="title">镇上的节庆</text><text class="more">共 {{festivals.length}} 场</text></view>
+    <scroll-view scroll-x style="white-space:nowrap">
+      <view wx:for="{{festivals}}" wx:key="id" style="display:inline-block;width:400rpx;margin-right:18rpx;vertical-align:top">
+        <image wx:if="{{item.image}}" class="img img-16-9" src="{{item.image}}" mode="aspectFill"
+          binderror="onImgError" data-field="festivals" data-idx="{{index}}" data-item="{{item}}" />
+        <view wx:else class="ph ph-{{item.tone}} img-16-9">{{item.imageText}}</view>
+        <view class="card" style="padding:16rpx;white-space:normal">
+          <view class="bold small ellipsis">{{item.title}}</view>
+          <view class="small muted">{{item.festival_date}} · {{item.place}}</view>
+        </view>
+      </view>
+    </scroll-view>
+
+    <view class="section-head"><text class="title">带点好物回家</text>
+      <text class="more" data-type="product" bindtap="gotoList">去逛逛 ›</text></view>
+    <view class="grid-2">
+      <view wx:for="{{products}}" wx:key="id" class="card" style="padding:14rpx"
+        data-type="product" data-id="{{item.id}}" bindtap="gotoDetail">
+        <image wx:if="{{item.image}}" class="img img-4-3" src="{{item.image}}" mode="aspectFill" style="height:200rpx"
+          binderror="onImgError" data-field="products" data-idx="{{index}}" data-item="{{item}}" />
+        <view wx:else class="ph ph-{{item.tone}} img-4-3" style="height:200rpx">{{item.imageText}}</view>
+        <view class="small bold ellipsis" style="margin-top:10rpx">{{item.name}}</view>
+        <view class="price small">¥{{item.price}}</view>
+      </view>
+    </view>
+
+    <view class="section-head"><text class="title">跟着老师傅学酿酒</text>
+      <text class="more" data-type="research" bindtap="gotoList">全部 ›</text></view>
+    <view wx:for="{{research}}" wx:key="id" class="list-item"
+      data-type="research" data-id="{{item.id}}" bindtap="gotoDetail">
+      <image wx:if="{{item.image}}" class="thumb" src="{{item.image}}" mode="aspectFill"
+        binderror="onImgError" data-field="research" data-idx="{{index}}" data-item="{{item}}" />
+      <view wx:else class="thumb ph ph-{{item.tone}}">{{item.imageText}}</view>
+      <view class="body">
+        <view class="bold ellipsis">{{item.title}}</view>
+        <view class="small muted">{{item.start_date}} 开课 · 还剩 {{item.capacity - item.signed}} 个名额</view>
+        <view class="price">¥{{item.price}}</view>
+      </view>
+    </view>
+  </block>
+
+  <view class="small muted" style="text-align:center;margin:34rpx 0 10rpx">
+    一颗梅子，从山上到桌上 · {{envName}}
+  </view>
+</view>

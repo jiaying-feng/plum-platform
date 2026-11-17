@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>青梅农商文旅平台 — 界面总览</title>
+<style>
+  :root { --green:#3f9c4a; --dark:#1b2b3a; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:"Microsoft YaHei",system-ui,sans-serif; color:#223; background:#f4f7f4; }
+  header { background:linear-gradient(120deg,#3f9c4a,#66bb6a); color:#fff; padding:28px 36px; }
+  header h1 { margin:0 0 8px; font-size:26px; }
+  header p { margin:0; opacity:.92; font-size:14px; line-height:1.7; }
+  main { max-width:1360px; margin:0 auto; padding:24px 28px 60px; }
+  h2 { font-size:19px; margin:34px 0 6px; padding-left:12px; border-left:5px solid var(--green); }
+  .note { color:#667; font-size:13px; margin:0 0 18px 17px; line-height:1.7; }
+  .grid { display:grid; gap:20px; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); }
+  figure { margin:0; background:#fff; border:1px solid #dfe7df; border-radius:10px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,.05); }
+  figure img { width:100%; display:block; background:#fff; }
+  figcaption { padding:11px 14px; font-size:14px; font-weight:600; border-top:1px solid #eef2ee; }
+  figcaption small { display:block; font-weight:400; color:#788; margin-top:4px; font-size:12px; line-height:1.5; }
+  .mobile figure { max-width:390px; }
+  .mobile .grid { grid-template-columns:repeat(auto-fill,minmax(300px,390px)); }
+  .tag { display:inline-block; font-size:11px; padding:2px 8px; border-radius:10px; background:#e8f5e9; color:#2e7d32; margin-left:8px; vertical-align:middle; }
+  .tag.archive { background:#fff3e0; color:#b26a00; }
+  footer { color:#788; font-size:12px; text-align:center; padding:0 20px 40px; line-height:1.8; }
+</style>
+</head>
+<body>
+<header>
+  <h1>大邑䢺江镇青梅农商文旅服务平台 · 界面总览</h1>
+  <p>
+    实跑部分：PC 管理后台由本次静态托管 <code>plum-admin/dist</code> 启动、Chrome 无头浏览器登录后逐页截图（本地演示数据）。<br />
+    归档部分：H5 / 小程序界面取自 <code>deploy/screenshots/audit_*.png</code>（当时 dev server 在 5173 端口的 22 场景巡检截图），uni-app 三端共用同一套源码。
+  </p>
+</header>
+<main>
+
+  <h2>一、PC 管理后台 <span class="tag">本次实跑截图</span></h2>
+  <p class="note">访问 http://127.0.0.1:5174/#/login，演示账号 admin / admin123。侧栏 7 个菜单均可正常渲染，无破损图片。</p>
+  <div class="grid">
+    <figure><img src="admin_login.png" alt="登录页"><figcaption>管理员登录<small>青梅农旅 · 大邑青梅农旅融合平台管理后台；演示账号提示</small></figcaption></figure>
+    <figure><img src="admin_dashboard.png" alt="仪表盘"><figcaption>仪表盘<small>今日预约 / 待审商户 / 待审商品 / 总销售额 + 近7日预约趋势 + 热销 TOP3</small></figcaption></figure>
+    <figure><img src="admin_users.png" alt="用户管理"><figcaption>用户管理<small>关键字、角色筛选；ID/用户名/昵称/手机号/角色/状态/注册时间</small></figcaption></figure>
+    <figure><img src="admin_merchants.png" alt="商户审核"><figcaption>商户审核<small>商户名称、联系人、地址、审核状态与备注</small></figcaption></figure>
+    <figure><img src="admin_products.png" alt="商品审核"><figcaption>商品审核<small>价格 / 库存 / 销量 / 状态；通过、驳回操作</small></figcaption></figure>
+    <figure><img src="admin_orders.png" alt="订单管理"><figcaption>订单管理<small>订单号、收货人、金额、状态、下单时间</small></figcaption></figure>
+    <figure><img src="admin_reservations.png" alt="预约管理"><figcaption>预约管理<small>预约号、到园日期、时段、人数、核销码；导出 CSV</small></figcaption></figure>
+    <figure><img src="admin_categories.png" alt="分类管理"><figcaption>分类管理<small>新增分类；分类名称、排序、启用状态、编辑</small></figcaption></figure>
+  </div>
+
+  <h2>二、H5 网页 <span class="tag archive">归档截图</span></h2>
+  <p class="note">桌面视口下的 H5 首页，uni-app 同一套代码在浏览器中的呈现。</p>
+  <div class="grid">
+    <figure><img src="h5_home.png" alt="H5 首页"><figcaption>H5 首页（早期版本）<small>搜索框、AI助手、轮播、四宫格入口、采摘园地图、底部 tabBar</small></figcaption></figure>
+    <figure><img src="audit_desktop_h5_index.png" alt="H5 首页巡检"><figcaption>H5 首页（最终巡检版）<small>补齐轮播与图片；地图仍为高德 Key 缺失占位</small></figcaption></figure>
+  </div>
+
+  <h2>三、小程序 / 移动端界面 <span class="tag archive">归档截图 · 375×812</span></h2>
+  <p class="note">微信小程序与 H5 共用 uni-app 源码，下列为移动视口巡检截图，可代表小程序端界面。</p>
+  <div class="mobile grid">
+    <figure><img src="audit_mobile_index.png" alt="移动端首页"><figcaption>首页 / tabBar<small>搜索、AI助手、采摘预约、青梅民宿、地图点位、活动报名、采摘园地图、热门研学</small></figcaption></figure>
+    <figure><img src="audit_mobile_orchard_detail.png" alt="采摘园详情"><figcaption>采摘园详情<small>园区图、地址、营业时间、票价、园区介绍、语音讲解、立即预约</small></figcaption></figure>
+    <figure><img src="audit_mobile_product_list.png" alt="青梅商城"><figcaption>青梅商城<small>搜索、分类筛选、商品列表（当前仅 1 件商品）</small></figcaption></figure>
+    <figure><img src="audit_mobile_product_detail.png" alt="商品详情"><figcaption>商品详情<small>大图、¥88/瓶、商品详情、购物车 / 加入购物车 / 立即购买</small></figcaption></figure>
+    <figure><img src="audit_mobile_research.png" alt="研学活动"><figcaption>研学活动<small>3 门课程、日期、报名进度、单价</small></figcaption></figure>
+    <figure><img src="audit_mobile_homestay.png" alt="青梅民宿"><figcaption>青梅民宿<small>民宿列表（当前仅 1 家）</small></figcaption></figure>
+  </div>
+
+</main>
+<footer>
+  截图目录：plum_platform/ui-showcase/ ｜ 原始归档：deploy/screenshots/ ｜ 页面巡检记录：deploy/screenshots/audit_report_final.txt<br />
+  说明：归档截图来自源码完整时的运行记录；当前快照缺少 plum-server、plum-mobile 与 plum-admin/src，H5 与小程序无法再次启动。
+</footer>
+</body>
+</html>

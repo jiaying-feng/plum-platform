@@ -1,0 +1,14 @@
+# 可选依赖 —— 运行平台本体不需要，仅下列场景才安装：
+#   A. 重新生成答辩材料（毕业设计答辩材料/_build/ 下的脚本）
+#   B. 运行浏览器界面巡检（tests/ui_audit.py、tests/pc_audit.py）
+# 安装：python -m pip install -r requirements-optional.txt
+# 平台本体依赖见 plum-platform/requirements.txt（只有 Flask==3.0.3）。
+
+# A. 说明书 / PPT / 评语表生成与校验
+python-docx>=1.1.0
+python-pptx>=0.6.23
+Pillow>=10.0.0
+lxml>=5.0.0
+
+# B. 浏览器界面巡检（另需本机 Chrome 或 Edge）
+websocket-client>=1.7.0

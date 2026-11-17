@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>大邑䢺江镇 · 青梅产业农商文旅综合平台</title>
+<link rel="stylesheet" href="/web/common.css" />
+<link rel="stylesheet" href="/web/pc.css" />
+<style>
+  .portal-hero { background: linear-gradient(125deg, #2f7040, #5aa368); color: #fff; padding: 52px 0 68px; }
+  .portal-hero h1 { font-size: 32px; margin-bottom: 10px; }
+  .portal-hero p { opacity: .92; font-size: 14px; }
+  .portal-hero .sub { font-size: 12px; opacity: .8; margin-top: 12px; }
+  .portal-main { max-width: 1180px; margin: -34px auto 48px; padding: 0 20px; position: relative; }
+  .entry { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--line);
+    border-radius: var(--r); padding: 22px; box-shadow: var(--shadow); transition: .18s; min-height: 168px; }
+  .entry:hover { transform: translateY(-3px); border-color: var(--green); }
+  .entry .kind { font-size: 11px; color: var(--green-dark); letter-spacing: 1px; }
+  .entry h3 { font-size: 17px; margin: 8px 0 8px; }
+  .entry p { color: var(--muted); font-size: 12px; line-height: 1.8; flex: 1; }
+  .entry .go { color: var(--green-dark); font-size: 12px; font-weight: 700; margin-top: 12px; }
+  .entry.minor { min-height: 112px; background: #fbfdfa; }
+  .entry.minor h3 { font-size: 15px; margin: 6px 0; }
+  .matrix { width: 100%; border-collapse: collapse; font-size: 13px; background: #fff; }
+  .matrix th, .matrix td { border: 1px solid var(--line); padding: 9px 12px; text-align: left; }
+  .matrix th { background: #f6f9f5; }
+  .portal-foot { border-top: 1px solid var(--line); background: #fff; padding: 22px 0;
+    text-align: center; color: var(--muted); font-size: 12px; }
+  .login-strip { background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.22);
+    border-radius: var(--r); padding: 10px 14px; font-size: 12px; margin-top: 20px; display: inline-block; }
+  .login-strip .badge { margin-left: 6px; }
+</style>
+</head>
+<body>
+
+<header class="pc-topbar">
+  <div class="pc-container">
+    <div class="pc-logo">䢺江青梅</div>
+    <div style="font-size:12px;opacity:.85">大邑䢺江镇青梅产业农商文旅综合平台</div>
+    <div class="pc-top-actions">
+      <a class="btn btn-sm" href="/health">服务状态</a>
+    </div>
+  </div>
+</header>
+
+<div class="portal-hero">
+  <div class="pc-container">
+    <h1>一颗梅子，从山上到桌上</h1>
+    <p>摘梅、酿酒、住店、赶集，都在这儿。</p>
+    <div class="login-strip">当前浏览器已登录：<span id="logins">正在看…</span></div>
+  </div>
+</div>
+
+<main class="portal-main">
+
+  <div class="card" style="margin-top:0">
+    <h3 class="card-title">青梅园都在哪儿</h3>
+    <div class="map-box" id="portalMap" style="max-width:820px;margin-top:12px"></div>
+  </div>
+
+  <div class="pc-section-title" style="margin-top:26px"><h2>PC 端入口</h2></div>
+  <div class="pc-grid g-3">
+    <a class="entry" href="/consumer">
+      <span class="kind">消费者 · 客户端</span>
+      <h3>青梅农旅 · 消费者站</h3>
+      <p>看园子、约采摘、报研学、订民宿、逛集市、集章，桌面双栏详情与表格购物车；浏览免登录，下单需游客账号。</p>
+      <div class="go">打开消费者站 →</div>
+    </a>
+    <a class="entry" href="/biz">
+      <span class="kind">商户 · 经营端</span>
+      <h3>商户 PC 工作台</h3>
+      <p>排场次、调房价、管商品、看订单、发货，到场扫个码就核销；表格 + 批量操作，适合长时间坐在电脑前用。</p>
+      <div class="go">打开工作台 →</div>
+    </a>
+    <a class="entry" href="/admin">
+      <span class="kind">镇平台 · 管理端</span>
+      <h3>PC 管理后台</h3>
+      <p>审商户、审场次、审商品、发活动，销售和预约走势一屏看清；仅管理员可进。</p>
+      <div class="go">打开后台 →</div>
+    </a>
+  </div>
+
+  <div class="pc-section-title"><h2>移动端入口</h2></div>
+  <div class="pc-grid g-3">
+    <a class="entry minor" href="/visitor">
+      <span class="kind">游客 · H5</span><h3>游客 H5</h3>
+      <div class="go">打开 /visitor →</div>
+    </a>
+    <a class="entry minor" href="/merchant">
+      <span class="kind">商户 · H5</span><h3>商户 H5 工作台</h3>
+      <div class="go">打开 /merchant →</div>
+    </a>
+    <div class="entry minor">
+      <span class="kind">游客 · 小程序</span><h3>微信小程序</h3>
+    </div>
+  </div>
+</main>
+
+<div class="portal-foot">梅子熟的时候，来镇上坐坐。</div>
+
+<script src="/web/common.js"></script>
+<script src="/web/map.js"></script>
+<script>
+  (function () {
+    var box = document.getElementById('logins');
+    try {
+      var all = Session.all();
+      if (!all.length) { box.textContent = '还没有登录任何端'; return; }
+      box.innerHTML = all.map(function (x) {
+        return '<span class="badge">' + esc(x.nickname) + ' · ' + esc(x.role) + '</span>';
+      }).join(' ');
+    } catch (e) { box.textContent = '读取登录态失败'; }
+  })();
+
+  // 门户首页也展示与 H5 / 小程序完全相同的离线地图
+  (function () {
+    var box = document.getElementById('portalMap');
+    if (!box || !window.PlumMap || !window.API) return;
+    API.get('/api/home').then(function (d) {
+      var spots = (d && d.orchards) || [];
+      box.innerHTML = PlumMap.html(spots);
+      PlumMap.bind(box, spots, function (s) {
+        location.href = '/consumer#/orchard/' + s.id;
+      });
+    }).catch(function () {
+      box.innerHTML = '<div class="empty">地图数据没加载出来，确认服务已启动</div>';
+    });
+  })();
+</script>
+</body>
+</html>

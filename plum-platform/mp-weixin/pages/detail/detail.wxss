@@ -1,0 +1,11 @@
+/* 详情页补充样式 */
+.page { padding-bottom: 150rpx; }
+.bottom-bar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+  display: flex; gap: 16rpx; align-items: center;
+  padding: 16rpx 28rpx calc(16rpx + env(safe-area-inset-bottom));
+  background: #fff; border-top: 1rpx solid var(--line);
+}
+.bottom-bar .fav-btn { flex: 0 0 180rpx; }
+.bottom-bar .main-btn { flex: 1; }
+.sheet .field .input { min-height: 44rpx; }

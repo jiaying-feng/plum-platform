@@ -1,0 +1,59 @@
+<view class="page">
+
+  <view class="search">
+    <input class="input" placeholder="搜园子、青梅酒、课程、民宿" value="{{inputValue}}"
+      bindinput="onInput" confirm-type="search" bindconfirm="onSearch" />
+    <button class="btn btn-sm" bindtap="onSearch">搜索</button>
+    <button wx:if="{{keyword}}" class="btn btn-sm" bindtap="clearSearch">清除</button>
+  </view>
+
+  <view class="tabs">
+    <view wx:for="{{types}}" wx:key="key" class="tab {{type == item.key ? 'on' : ''}}"
+      data-type="{{item.key}}" bindtap="onType">{{item.name}}</view>
+  </view>
+
+  <view wx:if="{{type == 'product' && categories.length}}" class="tabs">
+    <view wx:for="{{categories}}" wx:key="id" class="tab {{categoryId == item.id ? 'on' : ''}}"
+      data-id="{{item.id}}" bindtap="onCategory">{{item.name}}</view>
+  </view>
+
+  <view wx:if="{{fromCache && !loading}}" class="small muted" style="margin-bottom:12rpx">
+    先看本地缓存，正在拉取最新数据
+  </view>
+
+  <view wx:if="{{loading && !records.length}}" class="state"><text class="spin"></text>正在翻账本…</view>
+
+  <view wx:if="{{error && !records.length}}" class="error-box">
+    <view class="msg">{{error}}</view>
+    <button class="btn btn-primary btn-sm" bindtap="retry">重新加载</button>
+  </view>
+
+  <view wx:if="{{!records.length && !loading && !error}}" class="state">
+    没找着相关的，换个词或换个分类试试
+  </view>
+
+  <view wx:for="{{records}}" wx:key="id" class="list-item"
+    data-type="{{item.type}}" data-id="{{item.id}}" bindtap="gotoDetail">
+    <image wx:if="{{item.image}}" class="thumb" src="{{item.image}}" mode="aspectFill"
+      binderror="onImgError" data-field="records" data-idx="{{index}}" data-item="{{item}}" />
+    <view wx:else class="thumb ph ph-{{item.tone}}">{{item.imageText}}</view>
+    <view class="body">
+      <view class="bold ellipsis">{{item.title}}</view>
+      <view class="small muted ellipsis-2">{{item.desc}}</view>
+      <view style="display:flex;justify-content:space-between;align-items:center;margin-top:8rpx">
+        <text class="price">{{item.priceText}}</text>
+        <text class="badge badge-off">{{item.tag}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{records.length}}" class="load-more">
+    <view wx:if="{{loadingMore}}"><text class="spin"></text>再翻一页…</view>
+    <view wx:elif="{{error}}" class="error-box">
+      <view class="msg">{{error}}</view>
+      <button class="btn btn-sm" bindtap="retry">重新加载</button>
+    </view>
+    <view wx:elif="{{noMore}}">— 一共 {{total}} 条，都在这儿了 —</view>
+    <view wx:else>上拉还能看更多</view>
+  </view>
+</view>

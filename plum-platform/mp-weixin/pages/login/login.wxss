@@ -1,0 +1,36 @@
+.login-page { padding: 0 32rpx 60rpx; }
+
+.brand {
+  margin: 0 -32rpx 36rpx;
+  padding: 70rpx 40rpx 56rpx;
+  background: linear-gradient(150deg, #2f7040, #4b9b5c);
+  color: #fff;
+}
+.brand-title { font-size: 48rpx; font-weight: 700; letter-spacing: 4rpx; }
+.brand-line { margin-top: 10rpx; font-size: 25rpx; opacity: .85; }
+
+.form-card { margin-top: -30rpx; position: relative; padding: 32rpx 28rpx; }
+.form-title { font-size: 34rpx; font-weight: 700; margin-bottom: 4rpx; }
+.form-card .field { margin-top: 26rpx; }
+.pwd-row { position: relative; }
+.pwd-row .input { padding-right: 110rpx; }
+.pwd-toggle {
+  position: absolute; right: 20rpx; top: 0; height: 100%;
+  display: flex; align-items: center; font-size: 24rpx; color: var(--green-dark);
+}
+.ph-input { color: #a9b3ab; }
+
+.error-inline {
+  margin-top: 20rpx; padding: 16rpx 20rpx; border-radius: 14rpx;
+  background: #fbecea; color: var(--danger); font-size: 25rpx;
+}
+.submit { margin-top: 32rpx; height: 88rpx; font-size: 30rpx; }
+.skip { margin-top: 16rpx; color: var(--muted); }
+
+.demo-card { padding: 24rpx 28rpx; }
+.demo-row {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 18rpx; padding: 16rpx 20rpx; border-radius: 14rpx;
+  background: var(--green-soft);
+}
+.foot { text-align: center; margin-top: 36rpx; line-height: 1.9; }
